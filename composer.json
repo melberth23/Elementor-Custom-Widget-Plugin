@@ -1,0 +1,20 @@
+{
+	"name": "melberth23/Elementor-Custom-Widget-Plugin",
+	"description": "",
+	"keywords": [
+		"wordpress",
+		"plugin",
+		"elementor custom widget"
+	],
+	"homepage": "https://github.com/melberth23/Elementor-Custom-Widget-Plugin",
+	"authors": [
+		{
+			"name": "Melberth",
+			"homepage": "#"
+		}
+	],
+	"type": "wordpress-plugin",
+	"require": {
+		"php": ">=5.6"
+	}
+}
