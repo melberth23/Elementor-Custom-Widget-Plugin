@@ -10,12 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Elementor_Custom_Widget extends \Elementor\Widget_Base {
+class Elementor_Custom_Element_Widget extends \Elementor\Widget_Base {
 
 	/**
 	 * Get widget name.
 	 *
-	 * Retrieve oEmbed widget name.
+	 * Retrieve Custom widget name.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -28,7 +28,7 @@ class Elementor_Custom_Widget extends \Elementor\Widget_Base {
 	/**
 	 * Get widget title.
 	 *
-	 * Retrieve oEmbed widget title.
+	 * Retrieve Custom widget title.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -41,7 +41,7 @@ class Elementor_Custom_Widget extends \Elementor\Widget_Base {
 	/**
 	 * Get widget icon.
 	 *
-	 * Retrieve oEmbed widget icon.
+	 * Retrieve Custom widget icon.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -52,22 +52,9 @@ class Elementor_Custom_Widget extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Get custom help URL.
-	 *
-	 * Retrieve a URL where the user can get more information about the widget.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Widget help URL.
-	 */
-	public function get_custom_help_url() {
-		return 'https://developers.elementor.com/docs/widgets/';
-	}
-
-	/**
 	 * Get widget categories.
 	 *
-	 * Retrieve the list of categories the oEmbed widget belongs to.
+	 * Retrieve the list of categories the Custom widget belongs to.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -80,50 +67,18 @@ class Elementor_Custom_Widget extends \Elementor\Widget_Base {
 	/**
 	 * Get widget keywords.
 	 *
-	 * Retrieve the list of keywords the oEmbed widget belongs to.
+	 * Retrieve the list of keywords the Custom widget belongs to.
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
-		return [ 'custom widget', 'url', 'link' ];
+		return [ 'custom widget' ];
 	}
 
 	/**
-	 * Register oEmbed widget controls.
-	 *
-	 * Add input fields to allow the user to customize the widget settings.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
-	protected function register_controls() {
-
-		$this->start_controls_section(
-			'content_section',
-			[
-				'label' => esc_html__( 'Content', 'elementor-custom-widget' ),
-				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'url',
-			[
-				'label' => esc_html__( 'URL to embed', 'elementor-custom-widget' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'input_type' => 'url',
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-custom-widget' ),
-			]
-		);
-
-		$this->end_controls_section();
-
-	}
-
-	/**
-	 * Render oEmbed widget output on the frontend.
+	 * Render Custom widget output on the frontend.
 	 *
 	 * Written in PHP and used to generate the final HTML.
 	 *
@@ -133,12 +88,43 @@ class Elementor_Custom_Widget extends \Elementor\Widget_Base {
 	protected function render() {
 
 		$settings = $this->get_settings_for_display();
-		$html = wp_oembed_get( $settings['url'] );
 
-		echo '<div class="custom-elementor-widget">';
-		echo ( $html ) ? $html : $settings['url'];
-		echo '</div>';
+		$widget_text = get_field( 'widget_text' );
 
+		if(!empty($widget_text)) {
+			echo '<div class="custom-elementor-widget-text">';
+			echo "Widget Text Value: ". $widget_text;
+			echo '</div>';
+		}
+
+		$this->display_repeater_fields();
+
+	}
+
+	public function display_repeater_fields() {
+		$size = 'full';
+
+		if( have_rows('repeater_field_name') ):
+		    while( have_rows('repeater_field_name') ) : the_row();
+
+		        $sub_widget_textarea = get_sub_field('sub_widget_textarea');
+		        $sub_widget_image = get_sub_field('sub_widget_image');
+
+		        if(!empty($sub_widget_textarea)) {
+			        echo '<div class="custom-elementor-widget-textarea">';
+					echo "Widget Textarea Value: ". $sub_widget_textarea;
+					echo '</div>';
+		        }
+
+		        if(!empty($sub_widget_image)) {
+			        echo '<div class="custom-elementor-widget-textarea">';
+					echo wp_get_attachment_image( $sub_widget_image, $size );
+					echo '</div>';
+		        }
+
+		    // End loop.
+		    endwhile;
+		endif;
 	}
 
 }

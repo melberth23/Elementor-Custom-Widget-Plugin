@@ -117,6 +117,11 @@ class Elementor_Custom_Widget {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-elementor-custom-widget-admin.php';
 
 		/**
+		 * The class responsible for defining all actions that occur connected to elementor custom widget.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-elementor-custom-widget-register.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
