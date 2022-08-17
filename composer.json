@@ -1,12 +1,12 @@
 {
-	"name": "melberth23/Elementor-Custom-Widget-Plugin",
+	"name": "melberth23/elementor-custom-widget-plugin",
 	"description": "",
 	"keywords": [
 		"wordpress",
 		"plugin",
 		"elementor custom widget"
 	],
-	"homepage": "https://github.com/melberth23/Elementor-Custom-Widget-Plugin",
+	"homepage": "https://github.com/melberth23/elementor-custom-widget-plugin",
 	"authors": [
 		{
 			"name": "Melberth",
